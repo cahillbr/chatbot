@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simple ChatGPT Bot</title>
+  <style>
+    body { font-family: Arial; max-width: 500px; margin: auto; padding: 20px; }
+    textarea, button { width: 100%; margin-top: 10px; }
+    #chat { margin-top: 20px; white-space: pre-wrap; }
+  </style>
+</head>
+<body>
+  <h2>Ask me anything!</h2>
+  <textarea id="input" rows="3" placeholder="Type your question here..."></textarea>
+  <button onclick="sendMessage()">Send</button>
+  <div id="chat"></div>
+
+  <script>
+    async function sendMessage() {
+      const userInput = document.getElementById("input").value;
+      const chatDiv = document.getElementById("chat");
+
+      chatDiv.innerHTML += `You: ${userInput}\n`;
+
+      const response = await fetch("https://api.openai.com/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer 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"
+        },
+        body: JSON.stringify({
+          model: "gpt-4o", // or use "gpt-3.5-turbo"
+          messages: [{ role: "user", content: userInput }]
+        })
+      });
+
+      const data = await response.json();
+      const reply = data.choices[0].message.content.trim();
+
+      chatDiv.innerHTML += `Bot: ${reply}\n\n`;
+      document.getElementById("input").value = "";
+    }
+  </script>
+</body>
+</html>
