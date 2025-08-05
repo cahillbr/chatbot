@@ -25,7 +25,7 @@
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": "Bearer YOUR_API_KEY_HERE"
+          "Authorization": "Bearer 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"
         },
         body: JSON.stringify({
           model: "gpt-4o", // or use "gpt-3.5-turbo"
